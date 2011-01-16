@@ -1,5 +1,5 @@
-(defvar *goal* "Evolution?!")
-(defvar *output-path* "/localhost/res/7940/wga-05-out.txt")
+(defvar *goal* "It's Evolution!")
+(defvar *output-path* "/gdv/7940/output.txt")
 (defvar *cur-gen* '())
 (defvar *num-of-fit* 20)
 (defvar *max-rand* 4)
@@ -7,6 +7,14 @@
 (defvar *best* (cons 0 ""))
 (defvar *g* 0)
 (defvar *start-time* (get-universal-time))
+(setf *random-state* (make-random-state t)) ;; If using SBCL, this is required to make things random...
+
+(defun log-to-file (str)
+  (with-open-file (*standard-output* *output-path* :direction :output
+                                       :if-exists :append
+                                       :if-does-not-exist :create)
+      (write-line str *standard-output*))
+  str)
 
 (defun cross-strings (s1 s2)
   (let ((r (random (min (length s1) (length s2)))))
@@ -87,13 +95,6 @@
     (setq *cur-gen* (get-new-gen *cur-gen*)))
 
 (setq *cur-gen* (create-first-gen))
-
-(defun log-to-file (str)
-  (with-open-file (*standard-output* *output-path* :direction :output
-                                       :if-exists :append
-                                       :if-does-not-exist :create)
-      (write-line str *standard-output*))
-  str)
 
 (log-to-file (format nil "~% New run. Options are *n-o-f* ~a, *c-o-m* ~a *m-r* ~a." *num-of-fit* *chance-of-mutation* *max-rand*))
 (log-to-file (format nil "The time is: ~a" *start-time*))
