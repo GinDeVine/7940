@@ -1,4 +1,0 @@
-My first attempt at Common Lisp programming.
-
-It's a genetic algorithm (or it might be genetic programming, I do not really know the difference) which tries to reach a goal string from a generation of random strings (with the same length as the goal string)  by crossing two string or mutating a ssingle char.
-It works well on small strings, but may use quite some time at larger ones.
